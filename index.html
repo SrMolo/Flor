@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gran Ramo de Lirios y Tulipanes</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        background: radial-gradient(
+          circle at top,
+          #151b30 0,
+          #050814 40%,
+          #020308 100%
+        );
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        color: #fff;
+        overflow: hidden;
+      }
+
+      h1 {
+        margin-top: 30px;
+        font-size: 1.4rem;
+        text-align: center;
+        padding: 0 1.5rem;
+        line-height: 1.4;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+      }
+
+      .scene {
+        position: relative;
+        width: 100%;
+        max-width: 1400px;
+        flex: 1;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding-bottom: 40px;
+      }
+
+      .ground {
+        position: absolute;
+        bottom: -80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 180%;
+        height: 260px;
+        background: radial-gradient(
+          circle at top,
+          #24492f 0,
+          #122417 45%,
+          #050805 100%
+        );
+        box-shadow: 0 -40px 80px rgba(0, 0, 0, 0.85) inset;
+        border-radius: 50%;
+        filter: blur(1px);
+      }
+
+      /* CAPA DE ESTRELLAS DE FONDO (FIJA) */
+      .stars {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image: radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.65) 1px,
+            transparent 1px
+          ),
+          radial-gradient(circle, rgba(180, 210, 255, 0.5) 1px, transparent 1px),
+          radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.35) 1px,
+            transparent 1px
+          );
+        background-size: 80px 80px, 140px 140px, 220px 220px;
+        background-position: 0 0, 40px 60px, 120px 40px;
+        opacity: 0.7;
+        animation: twinkle 9s linear infinite alternate;
+        mix-blend-mode: screen;
+        z-index: -1;
+      }
+      @keyframes twinkle {
+        0% {
+          opacity: 0.35;
+          transform: translateY(0);
+        }
+        50% {
+          opacity: 0.9;
+          transform: translateY(-8px);
+        }
+        100% {
+          opacity: 0.55;
+          transform: translateY(-14px);
+        }
+      }
+
+      /* RAMO EN UNA SOLA LÍNEA */
+      .bouquet {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+        width: 100%;
+        gap: 70px;
+        max-width: 1200px;
+        z-index: 1;
+        transform-origin: bottom center;
+        margin: 0 auto;
+      }
+
+      .stem-wrapper {
+        position: relative;
+        transform-origin: bottom center;
+      }
+
+      .stem-wrapper:nth-child(odd) {
+        transform: translateY(6px) rotate(-4deg);
+      }
+      .stem-wrapper:nth-child(even) {
+        transform: translateY(-4px) rotate(4deg);
+      }
+      .stem-wrapper:nth-child(4n) {
+        transform: translateY(-10px) rotate(0deg) scale(1.03);
+      }
+      .stem-wrapper:nth-child(7),
+      .stem-wrapper:nth-child(11),
+      .stem-wrapper:nth-child(15) {
+        transform: translateY(12px) rotate(0deg) scale(0.95);
+      }
+
+      .stem {
+        position: relative;
+        width: 8px;
+        height: 260px;
+        background: linear-gradient(to bottom, #2f8f3a, #0b3a18);
+        border-radius: 999px;
+        transform-origin: bottom center;
+        box-shadow: 0 0 7px rgba(42, 255, 120, 0.32),
+          0 0 18px rgba(0, 0, 0, 0.8);
+      }
+      .stem--tulip {
+        animation: swayTulip 4.8s ease-in-out infinite;
+      }
+      .stem--lily {
+        animation: swayLily 5.4s ease-in-out infinite;
+      }
+
+      @keyframes swayTulip {
+        0%,
+        100% {
+          transform: rotate(-2deg);
+        }
+        50% {
+          transform: rotate(3deg);
+        }
+      }
+      @keyframes swayLily {
+        0%,
+        100% {
+          transform: rotate(3deg);
+        }
+        50% {
+          transform: rotate(-3deg);
+        }
+      }
+
+      .leaf {
+        position: absolute;
+        width: 68px;
+        height: 98px;
+        background: radial-gradient(circle at 20% 0%, #77d785 0, #0c5b29 60%);
+        border-radius: 80% 5% 60% 10%;
+        box-shadow: 0 0 9px rgba(0, 0, 0, 0.55);
+        opacity: 0.97;
+        transform-origin: bottom left;
+      }
+      .leaf--left {
+        left: -60px;
+        bottom: 48px;
+        transform: rotate(-20deg);
+        animation: leafWaveLeft 4.6s ease-in-out infinite;
+      }
+      .leaf--right {
+        right: -60px;
+        bottom: 24px;
+        transform: scaleX(-1) rotate(-16deg);
+        animation: leafWaveRight 4.2s ease-in-out infinite;
+      }
+      @keyframes leafWaveLeft {
+        0%,
+        100% {
+          transform: rotate(-20deg);
+        }
+        50% {
+          transform: rotate(-8deg);
+        }
+      }
+      @keyframes leafWaveRight {
+        0%,
+        100% {
+          transform: scaleX(-1) rotate(-16deg);
+        }
+        50% {
+          transform: scaleX(-1) rotate(-4deg);
+        }
+      }
+
+      .flower-head {
+        position: absolute;
+        left: 50%;
+        bottom: 235px;
+        transform: translateX(-50%);
+      }
+      .flower-head--glow::before {
+        content: "";
+        position: absolute;
+        inset: -40px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 240, 255, 0.4),
+          transparent 72%
+        );
+        filter: blur(3px);
+        opacity: 0.75;
+        animation: glowPulse 3.6s ease-in-out infinite;
+        z-index: -1;
+      }
+      @keyframes glowPulse {
+        0%,
+        100% {
+          opacity: 0.3;
+          transform: scale(0.94);
+        }
+        50% {
+          opacity: 0.95;
+          transform: scale(1.08);
+        }
+      }
+
+      /* TULIPÁN */
+      .tulip {
+        position: relative;
+        width: 86px;
+        height: 110px;
+        transform-origin: bottom center;
+        animation: openTulip 5s ease-in-out infinite alternate;
+      }
+      .tulip__petal {
+        position: absolute;
+        width: 52px;
+        height: 96px;
+        background: radial-gradient(
+          circle at 30% 10%,
+          #ffe6ff 0,
+          #ff4f7d 40%,
+          #a31446 90%
+        );
+        border-radius: 50% 50% 40% 40%;
+        box-shadow: 0 0 11px rgba(255, 90, 150, 0.7),
+          0 18px 10px rgba(0, 0, 0, 0.5);
+      }
+      .tulip__petal--center {
+        left: 50%;
+        bottom: 6px;
+        transform: translateX(-50%);
+        clip-path: polygon(0 10%, 50% 0, 100% 10%, 90% 100%, 10% 100%);
+        z-index: 3;
+      }
+      .tulip__petal--left {
+        left: -2px;
+        bottom: 5px;
+        transform-origin: bottom right;
+        clip-path: polygon(0 10%, 60% 0, 100% 22%, 100% 100%, 0 100%);
+        z-index: 2;
+        animation: petalLeft 5s ease-in-out infinite alternate;
+      }
+      .tulip__petal--right {
+        right: -2px;
+        bottom: 5px;
+        transform-origin: bottom left;
+        clip-path: polygon(0 22%, 40% 0, 100% 10%, 100% 100%, 0 100%);
+        z-index: 2;
+        animation: petalRight 5s ease-in-out infinite alternate;
+      }
+      .tulip__center {
+        position: absolute;
+        left: 50%;
+        bottom: 34px;
+        width: 24px;
+        height: 48px;
+        transform: translateX(-50%);
+        background: radial-gradient(
+          circle at 50% 0,
+          #fff7d1 0,
+          #ffd86a 40%,
+          #f7a600 90%
+        );
+        border-radius: 50% 50% 40% 40%;
+        box-shadow: inset 0 0 7px rgba(255, 255, 255, 0.75),
+          0 9px 4px rgba(0, 0, 0, 0.45);
+        z-index: 1;
+      }
+      @keyframes openTulip {
+        0% {
+          transform: scale(0.96);
+        }
+        100% {
+          transform: scale(1.06);
+        }
+      }
+      @keyframes petalLeft {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(-14deg);
+        }
+      }
+      @keyframes petalRight {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(14deg);
+        }
+      }
+
+      /* LIRIO */
+      .lily {
+        position: relative;
+        width: 140px;
+        height: 200px;
+        transform-origin: bottom center;
+        animation: breatheLily 6.2s ease-in-out infinite;
+      }
+      .lily__petal {
+        position: absolute;
+        width: 70px;
+        height: 130px;
+        background: radial-gradient(
+          circle at 50% 0,
+          #ffffff 0,
+          #ffe9f9 35%,
+          #f7b3ff 70%,
+          #9250ff 100%
+        );
+        border-radius: 70% 70% 40% 40%;
+        box-shadow: 0 0 18px rgba(230, 200, 255, 0.95),
+          0 20px 9px rgba(0, 0, 0, 0.5);
+        transform-origin: bottom center;
+      }
+      .lily__petal--1 {
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%) rotate(0deg);
+      }
+      .lily__petal--2 {
+        left: 50%;
+        bottom: -2px;
+        transform: translateX(-50%) rotate(55deg);
+      }
+      .lily__petal--3 {
+        left: 50%;
+        bottom: -2px;
+        transform: translateX(-50%) rotate(-55deg);
+      }
+      .lily__petal--4 {
+        left: 50%;
+        bottom: -4px;
+        transform: translateX(-50%) rotate(120deg);
+      }
+      .lily__petal--5 {
+        left: 50%;
+        bottom: -4px;
+        transform: translateX(-50%) rotate(-120deg);
+      }
+      .lily__petal::after {
+        content: "";
+        position: absolute;
+        inset: 14px 18px;
+        border-radius: inherit;
+        background: radial-gradient(
+          circle at 50% 15%,
+          rgba(255, 205, 255, 0.95),
+          transparent 55%
+        );
+        opacity: 0.96;
+      }
+
+      .lily__core {
+        position: absolute;
+        left: 50%;
+        bottom: 44px;
+        width: 34px;
+        height: 34px;
+        transform: translateX(-50%);
+        background: radial-gradient(
+          circle,
+          #ffe66e 0,
+          #ffb300 40%,
+          #c87b00 80%
+        );
+        border-radius: 50%;
+        box-shadow: 0 0 12px rgba(255, 240, 120, 0.95),
+          0 8px 7px rgba(0, 0, 0, 0.6);
+        z-index: 3;
+      }
+      .lily__stamen {
+        position: absolute;
+        width: 3px;
+        height: 52px;
+        background: linear-gradient(to top, #704a00, #ffdf73);
+        transform-origin: bottom center;
+        bottom: 64px;
+        left: 50%;
+      }
+      .lily__stamen::after {
+        content: "";
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #ffdf73 0, #ff8f1f 60%);
+        box-shadow: 0 0 8px rgba(255, 201, 94, 0.95);
+      }
+      .lily__stamen--1 {
+        transform: translateX(-50%) rotate(-18deg);
+      }
+      .lily__stamen--2 {
+        transform: translateX(-50%) rotate(0deg);
+      }
+      .lily__stamen--3 {
+        transform: translateX(-50%) rotate(18deg);
+      }
+      @keyframes breatheLily {
+        0%,
+        100% {
+          transform: scale(0.93);
+        }
+        50% {
+          transform: scale(1.06);
+        }
+      }
+
+      /* PARTÍCULAS ANIMADAS DE FONDO (CIELO) */
+      .sparkles {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: visible;
+        z-index: 0;
+      }
+      .sparkle {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0;
+        animation: sparkleFloat 6s ease-in-out infinite;
+      }
+      .sparkle--small {
+        width: 2px;
+        height: 2px;
+        background: radial-gradient(
+          circle,
+          #ffffff 0,
+          rgba(255, 255, 255, 0.05) 70%
+        );
+      }
+      .sparkle--medium {
+        width: 3px;
+        height: 3px;
+        background: radial-gradient(
+          circle,
+          #a8d5ff 0,
+          rgba(168, 213, 255, 0.05) 70%
+        );
+      }
+      .sparkle--bright {
+        width: 4px;
+        height: 4px;
+        background: radial-gradient(
+          circle,
+          #8cf5ff 0,
+          rgba(140, 245, 255, 0.05) 70%
+        );
+        box-shadow: 0 0 8px rgba(140, 245, 255, 0.8);
+      }
+
+      @keyframes sparkleFloat {
+        0% {
+          opacity: 0;
+          transform: translateY(10px) scale(0.4);
+        }
+        20% {
+          opacity: 1;
+        }
+        70% {
+          opacity: 1;
+          transform: translateY(-30px) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-60px) scale(0.6);
+        }
+      }
+
+      @media (max-width: 900px) {
+        .bouquet {
+          width: 95%;
+        }
+      }
+      @media (max-width: 650px) {
+        .bouquet {
+          width: 100%;
+        }
+        h1 {
+          font-size: 1.1rem;
+          margin-top: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stars"></div>
+    <div class="sparkles" id="sparkles"></div>
+
+    <h1>
+      Por el momento no te las puedo dar en físico,<br />
+      pero eso no es impedimento para no dártelas.
+    </h1>
+
+    <div class="scene">
+      <div class="ground"></div>
+
+      <div class="bouquet">
+        <!-- 17 flores en línea -->
+        <!-- 1 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--tulip">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="tulip">
+                <div class="tulip__petal tulip__petal--left"></div>
+                <div class="tulip__petal tulip__petal--right"></div>
+                <div class="tulip__petal tulip__petal--center"></div>
+                <div class="tulip__center"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--lily">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="lily">
+                <div class="lily__petal lily__petal--1"></div>
+                <div class="lily__petal lily__petal--2"></div>
+                <div class="lily__petal lily__petal--3"></div>
+                <div class="lily__petal lily__petal--4"></div>
+                <div class="lily__petal lily__petal--5"></div>
+                <div class="lily__core"></div>
+                <div class="lily__stamen lily__stamen--1"></div>
+                <div class="lily__stamen lily__stamen--2"></div>
+                <div class="lily__stamen lily__stamen--3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--tulip">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="tulip">
+                <div class="tulip__petal tulip__petal--left"></div>
+                <div class="tulip__petal tulip__petal--right"></div>
+                <div class="tulip__petal tulip__petal--center"></div>
+                <div class="tulip__center"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--lily">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="lily">
+                <div class="lily__petal lily__petal--1"></div>
+                <div class="lily__petal lily__petal--2"></div>
+                <div class="lily__petal lily__petal--3"></div>
+                <div class="lily__petal lily__petal--4"></div>
+                <div class="lily__petal lily__petal--5"></div>
+                <div class="lily__core"></div>
+                <div class="lily__stamen lily__stamen--1"></div>
+                <div class="lily__stamen lily__stamen--2"></div>
+                <div class="lily__stamen lily__stamen--3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--tulip">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="tulip">
+                <div class="tulip__petal tulip__petal--left"></div>
+                <div class="tulip__petal tulip__petal--right"></div>
+                <div class="tulip__petal tulip__petal--center"></div>
+                <div class="tulip__center"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--lily">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="lily">
+                <div class="lily__petal lily__petal--1"></div>
+                <div class="lily__petal lily__petal--2"></div>
+                <div class="lily__petal lily__petal--3"></div>
+                <div class="lily__petal lily__petal--4"></div>
+                <div class="lily__petal lily__petal--5"></div>
+                <div class="lily__core"></div>
+                <div class="lily__stamen lily__stamen--1"></div>
+                <div class="lily__stamen lily__stamen--2"></div>
+                <div class="lily__stamen lily__stamen--3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--tulip">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="tulip">
+                <div class="tulip__petal tulip__petal--left"></div>
+                <div class="tulip__petal tulip__petal--right"></div>
+                <div class="tulip__petal tulip__petal--center"></div>
+                <div class="tulip__center"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--lily">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="lily">
+                <div class="lily__petal lily__petal--1"></div>
+                <div class="lily__petal lily__petal--2"></div>
+                <div class="lily__petal lily__petal--3"></div>
+                <div class="lily__petal lily__petal--4"></div>
+                <div class="lily__petal lily__petal--5"></div>
+                <div class="lily__core"></div>
+                <div class="lily__stamen lily__stamen--1"></div>
+                <div class="lily__stamen lily__stamen--2"></div>
+                <div class="lily__stamen lily__stamen--3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--tulip">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="tulip">
+                <div class="tulip__petal tulip__petal--left"></div>
+                <div class="tulip__petal tulip__petal--right"></div>
+                <div class="tulip__petal tulip__petal--center"></div>
+                <div class="tulip__center"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--lily">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="lily">
+                <div class="lily__petal lily__petal--1"></div>
+                <div class="lily__petal lily__petal--2"></div>
+                <div class="lily__petal lily__petal--3"></div>
+                <div class="lily__petal lily__petal--4"></div>
+                <div class="lily__petal lily__petal--5"></div>
+                <div class="lily__core"></div>
+                <div class="lily__stamen lily__stamen--1"></div>
+                <div class="lily__stamen lily__stamen--2"></div>
+                <div class="lily__stamen lily__stamen--3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--tulip">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="tulip">
+                <div class="tulip__petal tulip__petal--left"></div>
+                <div class="tulip__petal tulip__petal--right"></div>
+                <div class="tulip__petal tulip__petal--center"></div>
+                <div class="tulip__center"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--lily">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="lily">
+                <div class="lily__petal lily__petal--1"></div>
+                <div class="lily__petal lily__petal--2"></div>
+                <div class="lily__petal lily__petal--3"></div>
+                <div class="lily__petal lily__petal--4"></div>
+                <div class="lily__petal lily__petal--5"></div>
+                <div class="lily__core"></div>
+                <div class="lily__stamen lily__stamen--1"></div>
+                <div class="lily__stamen lily__stamen--2"></div>
+                <div class="lily__stamen lily__stamen--3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 13 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--tulip">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="tulip">
+                <div class="tulip__petal tulip__petal--left"></div>
+                <div class="tulip__petal tulip__petal--right"></div>
+                <div class="tulip__petal tulip__petal--center"></div>
+                <div class="tulip__center"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--lily">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="lily">
+                <div class="lily__petal lily__petal--1"></div>
+                <div class="lily__petal lily__petal--2"></div>
+                <div class="lily__petal lily__petal--3"></div>
+                <div class="lily__petal lily__petal--4"></div>
+                <div class="lily__petal lily__petal--5"></div>
+                <div class="lily__core"></div>
+                <div class="lily__stamen lily__stamen--1"></div>
+                <div class="lily__stamen lily__stamen--2"></div>
+                <div class="lily__stamen lily__stamen--3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 15 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--tulip">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="tulip">
+                <div class="tulip__petal tulip__petal--left"></div>
+                <div class="tulip__petal tulip__petal--right"></div>
+                <div class="tulip__petal tulip__petal--center"></div>
+                <div class="tulip__center"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 16 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--lily">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="lily">
+                <div class="lily__petal lily__petal--1"></div>
+                <div class="lily__petal lily__petal--2"></div>
+                <div class="lily__petal lily__petal--3"></div>
+                <div class="lily__petal lily__petal--4"></div>
+                <div class="lily__petal lily__petal--5"></div>
+                <div class="lily__core"></div>
+                <div class="lily__stamen lily__stamen--1"></div>
+                <div class="lily__stamen lily__stamen--2"></div>
+                <div class="lily__stamen lily__stamen--3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 17 -->
+        <div class="stem-wrapper">
+          <div class="stem stem--tulip">
+            <div class="leaf leaf--left"></div>
+            <div class="leaf leaf--right"></div>
+            <div class="flower-head flower-head--glow">
+              <div class="tulip">
+                <div class="tulip__petal tulip__petal--left"></div>
+                <div class="tulip__petal tulip__petal--right"></div>
+                <div class="tulip__petal tulip__petal--center"></div>
+                <div class="tulip__center"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // MUCHAS partículas de fondo, sobre todo en la parte superior
+      const sparklesContainer = document.getElementById("sparkles");
+      const TOTAL_SPARKLES = 220;
+      const TYPES = ["sparkle--small", "sparkle--medium", "sparkle--bright"];
+
+      for (let i = 0; i < TOTAL_SPARKLES; i++) {
+        const s = document.createElement("div");
+        s.className =
+          "sparkle " + TYPES[Math.floor(Math.random() * TYPES.length)];
+
+        // parte superior prioritaria (0–55%), algunas bajan más
+        const topZone = Math.random();
+        const top =
+          topZone < 0.75
+            ? Math.random() * 55 // cielo
+            : 40 + Math.random() * 40; // algo más cerca de las flores
+
+        s.style.left = Math.random() * 100 + "%";
+        s.style.top = top + "%";
+
+        s.style.animationDelay = (Math.random() * 6).toFixed(2) + "s";
+        s.style.animationDuration = (4 + Math.random() * 4).toFixed(2) + "s";
+
+        sparklesContainer.appendChild(s);
+      }
+    </script>
+  </body>
+</html>
